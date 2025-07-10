@@ -1,12 +1,10 @@
 repos:
-  - repo: local
-    hooks:
-      - id: pylint
-        name: pylint
-        entry: pylint
-        language: system
-        types: [python]
-        args:
-          - "-rn"        
-          - "-sn"        
-          - "--errors-only" 
+- repo: local
+  hooks:
+    - id: pylint
+      name: pylint (local)
+      entry: pylint
+      language: system
+      types: [python]
+      args: []
+      files: ^(models|views|serializers)/.*\.py$
