@@ -15,3 +15,6 @@ class Produto(models.Model):
     def __str__(self):
         """Retorna o nome do produto como representação da instância."""
         return str(self.nome) if self.nome is not None else ''
+# S.O.L.I.D.: SRP - Single Responsibility Principle
+# A classe Produto tem apenas uma responsabilidade: representar os dados de um produto.
+# Qualquer lógica de negócio, como cálculo de descontos ou relatórios, deve ser feita fora daqui.
