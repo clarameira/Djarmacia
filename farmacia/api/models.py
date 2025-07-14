@@ -3,8 +3,8 @@
 import uuid
 from django.db import models
 
-
-class Produto(models.Model):  # pylint: disable=too-few-public-methods
+# pylint: disable=too-few-public-methods
+class Produto(models.Model):
     """Modelo que representa um produto da farmácia."""
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -14,4 +14,4 @@ class Produto(models.Model):  # pylint: disable=too-few-public-methods
 
     def __str__(self):
         """Retorna o nome do produto como representação da instância."""
-        return self.nome
+        return str(self.nome) if self.nome is not None else ''

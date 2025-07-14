@@ -1,12 +1,13 @@
-"""ViewSet para manipular produtos da farmácia."""
+"""Views do app farmacia."""
+
 from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django.core.mail import send_mail
+from django.conf import settings
 from farmacia.api.models import Produto
 from farmacia.api.serializers import ProdutoSerializer
-from django.conf import settings
 
 
 class ProdutoViewSet(viewsets.ModelViewSet):
@@ -17,7 +18,7 @@ class ProdutoViewSet(viewsets.ModelViewSet):
 
 
 class NotificationAPIView(APIView):
-    """ViewSet para manipular produtos da farmácia."""
+    """View para enviar notificação por e-mail ao acessar a API."""
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
@@ -33,4 +34,3 @@ class NotificationAPIView(APIView):
             fail_silently=False,
         )
         return Response({"message": f"E-mail enviado com sucesso para {user_email}"})
-    
