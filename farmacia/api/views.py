@@ -1,13 +1,36 @@
 """Views do app farmacia."""
+
 from rest_framework import viewsets
+from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
-from farmacia.api.models import Produto  # pylint: disable=import-error
-from farmacia.api.serializers import ProdutoSerializer  # pylint: disable=import-error
+from rest_framework.response import Response
+from django.core.mail import send_mail
+from django.conf import settings
+from farmacia.api.models import Produto
+from farmacia.api.serializers import ProdutoSerializer
 
 
-class ProdutoViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancestors
+class ProdutoViewSet(viewsets.ModelViewSet):
     """ViewSet para manipular produtos da farmácia."""
-
     queryset = Produto.objects.all()
     serializer_class = ProdutoSerializer
     permission_classes = [IsAuthenticated]
+
+
+class NotificationAPIView(APIView):
+    """View para enviar notificação por e-mail ao acessar a API."""
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        user_email = request.user.email
+        if not user_email:
+            return Response({"error": "Usuário não possui email cadastrado."}, status=400)
+
+        send_mail(
+            'Notificação de acesso à API',
+            'Olá! Você acessou a API com sucesso.',
+            settings.DEFAULT_FROM_EMAIL,
+            [user_email],
+            fail_silently=False,
+        )
+        return Response({"message": f"E-mail enviado com sucesso para {user_email}"})
