@@ -15,7 +15,9 @@ class ProdutoViewSet(viewsets.ModelViewSet):
     queryset = Produto.objects.all()
     serializer_class = ProdutoSerializer
     permission_classes = [IsAuthenticated]
-
+# S.O.L.I.D.: OCP - Open/Closed Principle
+# Essa classe estende o ModelViewSet do DRF sem modificar o código interno da superclasse.
+# Está "aberta para extensão" (ao sobrescrever métodos como create/update futuramente) e "fechada para modificação".
 
 class NotificationAPIView(APIView):
     """View para enviar notificação por e-mail ao acessar a API."""
@@ -34,3 +36,5 @@ class NotificationAPIView(APIView):
             fail_silently=False,
         )
         return Response({"message": f"E-mail enviado com sucesso para {user_email}"})
+# S.O.L.I.D.: SRP - Single Responsibility Principle (violado)
+# Essa view está tratando tanto da lógica de envio de e-mail quanto da lógica HTTP da view.
