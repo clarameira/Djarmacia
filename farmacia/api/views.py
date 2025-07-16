@@ -26,7 +26,7 @@ class ProdutoViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancesto
 
 
 # S.O.L.I.D.: SRP (Princípio da Responsabilidade Única)
-# Esta view agora só gerencia a requisição HTTP.
+# Esta view só gerencia a requisição HTTP.
 # A lógica de envio de e-mail está encapsulada em uma classe separada.
 class NotificationAPIView(APIView):
     """View para enviar notificação por e-mail ao acessar a API."""
