@@ -4,17 +4,19 @@ from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
 from django.core.mail import send_mail
 from django.conf import settings
 from farmacia.api.models import Produto
-from farmacia.api.serializers import ProdutoSerializer
+from farmacia.api.serializers import ProdutoBaseSerializer
+
 
 
 class ProdutoViewSet(viewsets.ModelViewSet): # pylint: disable=too-many-ancestors
     """ViewSet para manipular produtos da farmácia."""
     queryset = Produto.objects.all() # pylint: disable=no-member
-    serializer_class = ProdutoSerializer
-    permission_classes = [IsAuthenticated]
+    serializer_class = ProdutoBaseSerializer
+    permission_classes = [AllowAny]
 # S.O.L.I.D.: OCP - Open/Closed Principle
 # Essa classe estende o ModelViewSet do DRF sem modificar o código interno da superclasse.
 # Está "aberta para extensão" (ao sobrescrever métodos como create/update futuramente) e
