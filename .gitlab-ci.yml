@@ -1,0 +1,21 @@
+image: python:3.10
+
+stages:
+  - lint
+  - test
+
+before_script:
+  - python -m venv venv
+  - source venv/bin/activate
+  - pip install -r requirements.txt
+
+lint:
+  stage: lint
+  script:
+    - pip install pre-commit
+    - pre-commit run --all-files
+
+test:
+  stage: test
+  script:
+    - python manage.py test
